@@ -15,6 +15,14 @@ This consists of two PySpark jobs:
 
 - `airflow_job.py` - Airflow DAG for schduling the sequence of tasks
 
+## Writing Jobs for CDE
+
+With CDE, the executor settings and additional spark configuration flags are set via the CDE UI and CLI and do not need to be set in spark session as per normal.
+
+with the load_data script we used the following settings:
+![Load Data Settings](images/load_data_config.png)
+
+Note in particular the bucket settings, this is because we need for spark to be able to access botht the open data `s3a://nyc-tlc` bucket and our configured cdp datalake bucket in this case `s3a://blaw-sandbox-2-cdp-bucket` 
 ## Airflow Notes
 
 Airflow jobs has to consist of a single DAG
@@ -23,7 +31,15 @@ CDE Jobs are defined with `CDEJobRunOperator` the execution order of the jobs ca
 
 ```python
 
-start >> job1 >> etl_job >> end
+start >> load_data_job >> etl_job >> end
+
+```
+
+Note that branching is supported as well ie
+
+```python
+
+start >> job1
 
 ```
 
@@ -31,3 +47,6 @@ start >> job1 >> etl_job >> end
 
 Walmart Global Tech - Airflow Beginners Guide: https://medium.com/walmartglobaltech/airflow-the-beginners-guide-684fda8c87f8
 
+Understanding Cron timers: https://crontab.guru/#*/30_*_*_*_*
+
+Understanding Airflow DAGs: https://towardsdatascience.com/airflow-how-and-when-to-use-it-2e07108ac9f5
