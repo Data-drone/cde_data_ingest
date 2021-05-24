@@ -35,13 +35,17 @@ start >> load_data_job >> etl_job >> end
 
 ```
 
-Note that branching is supported as well ie
+Note that branching is supported as well so we could do something like this in a more advanced `DAG`
 
 ```python
 
-start >> job1
+start >> load_data_job
+load_data_job >> etl_job_1
+load_data_job >> etl_job_2
 
 ```
+
+Both fanning out from `load_data_job` to multiple `etl_job` and fanning back in from `etl_job` to some sort of summary job is supported.
 
 ## Further Reading
 
