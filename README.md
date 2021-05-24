@@ -23,6 +23,11 @@ CDE Jobs are defined with `CDEJobRunOperator` the execution order of the jobs ca
 
 ```python
 
-start >> job1 >> job2 >> end
+start >> job1 >> etl_job >> end
 
 ```
+
+## Further Reading
+
+Walmart Global Tech - Airflow Beginners Guide: https://medium.com/walmartglobaltech/airflow-the-beginners-guide-684fda8c87f8
+

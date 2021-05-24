@@ -10,7 +10,7 @@ default_args = {
     'owner': 'brianlaw',
     'depends_on_past': False,
     'wait_for_downstream': True,
-    'start_date': datetime(2021,5,1,0),
+    'start_date': datetime(2021,5,1),
     'job_name': 'process_data'
 }
 
@@ -18,8 +18,9 @@ cde_process_dag = DAG(
     'cde_process',
     default_args=default_args,
     catchup=False,
-    schedule_interval="*/7 * * * *",
-    is_paused_upon_creation=False
+    schedule_interval="*/30 * * * *",
+    is_paused_upon_creation=False,
+    max_active_runs=1
 ) 
 
 start = DummyOperator(task_id='start', dag=cde_process_dag)
