@@ -1,7 +1,7 @@
 # CDE Example Data Ingestion
 
 
-This is an example of how to build out a Cloudera Data Engineering Job,
+This is an example of how to build out a Cloudera Data Engineering Workflow,
 
 ## Structure
 
@@ -23,6 +23,26 @@ with the load_data script we used the following settings:
 ![Load Data Settings](images/load_data_config.png)
 
 Note in particular the bucket settings, this is because we need for spark to be able to access botht the open data `s3a://nyc-tlc` bucket and our configured cdp datalake bucket in this case `s3a://blaw-sandbox-2-cdp-bucket` 
+
+## Setting up CDE and Airflow
+
+Setup `load_data.py` and `etl_job.py` as individual jobs in CDE.
+![Jobs Screen](images/Jobs_screen.png) including setting up the executor settings and `hadoopFileSystems`.
+
+note down the names of the jobs as you have entered them.
+
+In the `airflow_job.py` the job_names need to be entered as per what was entered into the cli ie
+
+```{python}
+
+# job_name needs to match what is in the CDE UI
+load_data_job = CDEJobRunOperator(
+    task_id='loader',
+    dag=cde_process_dag,
+    job_name='load_data_job'
+)
+
+```
 ## Airflow Notes
 
 Airflow jobs has to consist of a single DAG
