@@ -8,7 +8,7 @@ import pyspark.sql.functions as F
 
 # Notes on CDE Config
 # need to add:
-# spark.kerberos.access.hadoopFileSystems s3a://nyc-tcl,s3a://<your_cdp_datalake_bucket>
+# spark.kerberos.access.hadoopFileSystems s3a://nyc-tlc,s3a://<your_cdp_datalake_bucket>
 
 
 spark = SparkSession \

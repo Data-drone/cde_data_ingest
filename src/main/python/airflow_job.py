@@ -6,7 +6,6 @@ from airflow.operators.dummy_operator import DummyOperator
 
  
 default_args = {
-
     'owner': 'brianlaw',
     'depends_on_past': False,
     'wait_for_downstream': True,
@@ -18,9 +17,9 @@ cde_process_dag = DAG(
     'cde_process',
     default_args=default_args,
     catchup=False,
-    schedule_interval="*/30 * * * *",
+    schedule_interval="*/10 * * * *",
     is_paused_upon_creation=False,
-    max_active_runs=1
+    max_active_runs=2
 ) 
 
 start = DummyOperator(task_id='start', dag=cde_process_dag)

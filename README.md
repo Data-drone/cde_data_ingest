@@ -15,6 +15,12 @@ This consists of two PySpark jobs:
 
 - `airflow_job.py` - Airflow DAG for schduling the sequence of tasks
 
+Scala Spark Code is available under: `src/main/scala`
+
+This consists of two Scala jobs:
+- `LoadData.scala`
+- `ETLJob.scala`
+
 ## Writing Jobs for CDE
 
 With CDE, the executor settings and additional spark configuration flags are set via the CDE UI and CLI and do not need to be set in spark session as per normal.
@@ -22,7 +28,19 @@ With CDE, the executor settings and additional spark configuration flags are set
 with the load_data script we used the following settings:
 ![Load Data Settings](images/load_data_config.png)
 
-Note in particular the bucket settings, this is because we need for spark to be able to access botht the open data `s3a://nyc-tlc` bucket and our configured cdp datalake bucket in this case `s3a://blaw-sandbox-2-cdp-bucket` 
+Note in particular the bucket settings, this is because we need for spark to be able to access botht the open data `s3a://nyc-tlc` bucket and our configured cdp datalake bucket in this case `s3a://blaw-sandbox2-cdp-bucket` 
+
+### Building Jobs for CDE - Scala
+
+Ensure that you have sbt installed and can build scala projects.
+See: 
+
+There are two options for building your jars. fat jars or slim jars.
+
+#### Slim Jars
+
+Slim jars mean that any external dependencies need to be manually uploaded in the UI or CLI. See below:
+![Upload Dependencies](images/uploading_dependencies.png)
 
 ## Setting up CDE and Airflow
 
