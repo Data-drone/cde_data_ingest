@@ -5,6 +5,8 @@ import com.amazon.deequ.constraints.ConstraintStatus
 import java.net.{URI, URLEncoder}
 import org.apache.hadoop.fs.{FileSystem, Path, RemoteIterator, LocatedFileStatus}
 import scala.collection.mutable.ListBuffer
+import org.apache.spark.sql.SaveMode
+
 
 // adjustments for cde
 // .config("spark.executor.cores", "4")
@@ -40,7 +42,7 @@ object LoadData {
 
         if (verificationResult.status == CheckStatus.Success) {
           println("The data passed the test, everything is fine!")
-          taxi_test.write.format("parquet").saveAsTable("taxi_green")
+          taxi_test.write.format("parquet").mode(SaveMode.Overwrite).saveAsTable("taxi_green")
         } else {
           println("We found errors in the data:\n")
 
