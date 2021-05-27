@@ -1,11 +1,15 @@
-# CDE Example Data Ingestion
+# Working with Cloudera Data Engineering From 0 to Productivity!
 
+This article goes through all the steps to go becoming productive with Cloudera Data Engineering on CDP-Public Cloud.
+Cloudera Data Engineering is Cloudera's new Spark as a Service offering on Public Cloud. It features kubernetes auto-scaling of spark workers for cost optimisations, a simple UI interface for job management and an integrated Airflow Scheduler for developing production grade workflows. 
 
-This is an example of how to build out a Cloudera Data Engineering Workflow,
+## Coding for Cloudera Data Engineering
 
-## Structure
+Cloudera Data Engineer (CDE) can take Python and Scala jobs as inputs. Depending on which language you wish to use the steps to develop on CDE will be slightly different.
 
-PySpark and Airflow code is under: `src/main/python`
+## Repo Structure
+
+The example PySpark and Airflow code is under: `src/main/python`
 
 This consists of two PySpark jobs:
 - `load_data.py` - reads data from aws open data
@@ -15,20 +19,31 @@ This consists of two PySpark jobs:
 
 - `airflow_job.py` - Airflow DAG for schduling the sequence of tasks
 
-Scala Spark Code is available under: `src/main/scala`
+Scala Code is available under: `src/main/scala`
 
 This consists of two Scala jobs:
 - `LoadData.scala`
 - `ETLJob.scala`
 
-## Writing Jobs for CDE
+### Building Jobs for CDE - General Concepts
 
-With CDE, the executor settings and additional spark configuration flags are set via the CDE UI and CLI and do not need to be set in spark session as per normal.
+With CDE, the executor settings like `num_executors` and additional spark configuration flags that are normally set as part of the `SparkSession` are set via the CDE UI or CLI and do not need to be set in the code. Including them in the code as well can result in abnormal behaviour.
 
-with the load_data script we used the following settings:
+### Building Jobs for CDE - Python
+
+Exploring `load_data.py`, you can see that the `SparkSession` segment is quite consise. With the Cloudera SDX layer, the setting of kerberos settings and aws iam roles is also handled for the user. Simply initialise the SparkSession in the script then start developing your ETL process.
+
+To deploy the `load_data` script, we can simply define it as a new job in the CDE UI.
+
+For this particular example, we setup the load_data script used the following settings:
 ![Load Data Settings](images/load_data_config.png)
 
-Note in particular the bucket settings, this is because we need for spark to be able to access botht the open data `s3a://nyc-tlc` bucket and our configured cdp datalake bucket in this case `s3a://blaw-sandbox2-cdp-bucket` 
+Note the `Configurations` section, these are the flags and values that we would normally set when initialising the `SparkSession`.
+
+<TODO - Python dependency management?>
+
+Note in particular the bucket settings, this is because we need for spark to be able to access both the AWS open data `s3a://nyc-tlc` bucket and our standard configured cdp datalake bucket which in this case is `s3a://blaw-sandbox2-cdp-bucket`.
+
 
 ### Building Jobs for CDE - Scala
 
@@ -45,7 +60,7 @@ Slim jars mean that any external dependencies need to be manually uploaded in th
 #### Fat Jars
 
 With complex dependencies, a fat jar that comes prepackaged with all the necessary dependencies can be easier to handle.
- 
+
 
 ## Setting up CDE and Airflow
 
