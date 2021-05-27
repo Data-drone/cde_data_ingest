@@ -33,7 +33,7 @@ Note in particular the bucket settings, this is because we need for spark to be 
 ### Building Jobs for CDE - Scala
 
 Ensure that you have sbt installed and can build scala projects.
-See: 
+See: https://mungingdata.com/apache-spark/building-jar-sbt/
 
 There are two options for building your jars. fat jars or slim jars.
 
@@ -41,6 +41,11 @@ There are two options for building your jars. fat jars or slim jars.
 
 Slim jars mean that any external dependencies need to be manually uploaded in the UI or CLI. See below:
 ![Upload Dependencies](images/uploading_dependencies.png)
+
+#### Fat Jars
+
+With complex dependencies, a fat jar that comes prepackaged with all the necessary dependencies can be easier to handle.
+ 
 
 ## Setting up CDE and Airflow
 
