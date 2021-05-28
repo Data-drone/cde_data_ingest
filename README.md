@@ -1,12 +1,13 @@
 # Working with Cloudera Data Engineering From 0 to Productivity!
 
 This article goes through all the steps to go becoming productive with Cloudera Data Engineering on CDP-Public Cloud.
-Cloudera Data Engineering is Cloudera's new Spark as a Service offering on Public Cloud. It features kubernetes auto-scaling of spark workers for cost optimisations, a simple UI interface for job management and an integrated Airflow Scheduler for developing production grade workflows. 
+Cloudera Data Engineering is Cloudera's new Spark as a Service offering on Public Cloud. It features kubernetes auto-scaling of spark workers for cost optimisations, a simple UI interface for job management and an integrated Airflow Scheduler for managing your production grade workflows. 
 
 ## Coding for Cloudera Data Engineering
 
-Cloudera Data Engineer (CDE) can take Python and Scala jobs as inputs. Depending on which language you wish to use the steps to develop on CDE will be slightly different.
+Cloudera Data Engineer (CDE) can take Python and Scala jobs as inputs. Depending on which language you wish to use the steps to develop on CDE will be slightly different. There are two main ways to interact with CDE. Via the UI or the CLI. We will mainly use the UI here. For instructions on setting up the CLI see: https://docs.cloudera.com/data-engineering/cloud/cli-access/topics/cde-cli.html
 
+The CLI and associated API tools will help with CI/CD integration and also access to some of the deeper functionality with CDE but is not needed for most day to day tasks. 
 ## Repo Structure
 
 The example PySpark and Airflow code is under: `src/main/python`
@@ -40,10 +41,15 @@ For this particular example, we setup the load_data script used the following se
 
 Note the `Configurations` section, these are the flags and values that we would normally set when initialising the `SparkSession`.
 
-<TODO - Python dependency management?>
-
 Note in particular the bucket settings, this is because we need for spark to be able to access both the AWS open data `s3a://nyc-tlc` bucket and our standard configured cdp datalake bucket which in this case is `s3a://blaw-sandbox2-cdp-bucket`.
 
+Managing Python dependencies can be a little complicated. To read the detail of how to manage python dependencies see: https://blog.cloudera.com/managing-python-dependencies-for-spark-workloads-in-cloudera-data-engineering/
+
+At a highlevel, Options 1a and 1b as described in the article are suited towards python scripts and libraries that might be developed in-house that do not have other extensive external dependencies. These can be fully undertaken within the CLI as outlined or via the UI.
+
+For more advanced used cases, Option 2 maybe more suitable. Note that creating and activating `python-env` as described have to be done via the CDE CLI. At this stage, IOption 2 does not support more advanced packages like `Pandas` that have heavy system level dependencies and require compilation of C code.
+
+Option 3, provides full customisation of the environment but requires knowledge of Docker and a docker registry accessible to CDE to store and serve images. Many machine libraries and advanced analytical packages will require this option. As of writing, Option 3 is in Tech Preview and can be enabled with assistance of your Cloudera Account Team. 
 
 ### Building Jobs for CDE - Scala
 
