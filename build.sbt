@@ -11,7 +11,7 @@ val sparkVersion = "3.1.1"
 libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion % "provided"
 libraryDependencies += "org.apache.spark" %% "spark-sql" % sparkVersion % "provided"
 libraryDependencies += "org.apache.spark" %% "spark-hive" % sparkVersion % "provided"
-libraryDependencies += "org.apache.hadoop" % "hadoop-aws" % "3.1.1.7.2.8.0-228" % "provided"
+libraryDependencies += "org.apache.hadoop" %% "hadoop-aws" % "3.1.1.7.2.8.0-228" % "provided"
 libraryDependencies += "com.amazon.deequ" % "deequ" % "1.2.2-spark-3.0"
 
 resolvers += "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
@@ -23,4 +23,3 @@ homepage := Some(url("https://github.com/Data-drone/cde_data_ingest"))
 artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
   artifact.name + "_" + sv.binary + "-" + sparkVersion + "_" + module.revision + "." + artifact.extension
 }
-
