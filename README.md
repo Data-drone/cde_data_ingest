@@ -108,7 +108,8 @@ For the `etl_job` script, I set it up like below
 Once they are running we can see it appear under jobs runs
 ![Job Runs](images/job_runs.png) 
 
-#### Python Dependency Management
+
+### Python Dependency Management
 
 For many advanced jobs, pure PySpark may not suffice and it maybe necessary to import in Python packages.
 For in-house libraries and extra scripts, the approach it straight forward. The CDE UI or the `--py-file`, `--jar` and `--file` flags in the CLI allow for attaching extra packages and files into the execution environment as per a standard `spark-submit`.
@@ -299,17 +300,11 @@ The first place to check are the logs:
 As we can see above, there are the `stderr` logs these are from the OS tier. The `stdout` logs are the errors from spark itself.
 ![CDE Failed Job Logs](images/spark_stdout.png)
 
-In this case, we can see that the job failed as the director that the job was trying to write to already existed. Once we correct that then the job will run fine
-
-
-
-
-- Logs
-- A little WXM
+In this case, we can see that the job failed as the director that the job was trying to write to already existed. Once we correct that then the job will run fine as we can see from the successful second run above.
 
 ## Conclusion
 
-TaDa now you are expert!
+That was a quick whirlwind tour of Cloudera Data Engineering, Cloudera's cloud native autoscaling Spark Service. Happy Data Engineering!
 ## Further Reading
 
 Walmart Global Tech - Airflow Beginners Guide: https://medium.com/walmartglobaltech/airflow-the-beginners-guide-684fda8c87f8
@@ -319,3 +314,5 @@ Understanding Cron timers: https://crontab.guru/#*/30_*_*_*_*
 Understanding Airflow DAGs: https://towardsdatascience.com/airflow-how-and-when-to-use-it-2e07108ac9f5
 
 Compiling JARs for Spark: https://mungingdata.com/apache-spark/building-jar-sbt/
+
+Airflow Scheduling for CDE and CDW: https://community.cloudera.com/t5/Community-Articles/Airflow-Job-scheduling-with-CDE-and-CDW-ETL-jobs/ta-p/311615
