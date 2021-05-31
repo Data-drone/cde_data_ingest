@@ -7,9 +7,7 @@ What we will cover is how to adjust your applications to fit CDE's paradigm, dep
 
 ## Developing Apps for Cloudera Data Engineering
 
-In CDE, an application is called a job. This takes the form of a main jar file or python script with attached resources <to flesh out>
-
-Depending on which language you wish to use, the development setup will be slightly different. We will go through those at a high level later. 
+In CDE, an application is called a job. This takes the form of a main jar file or python script. Depending on which language you wish to use, the development setup will be slightly different. We will go through those at a high level later.
 
 For creating and managing jobs, you can interact with CDE via the UI or the CLI. We will mainly use the UI here. For instructions on setting up the CLI see: https://docs.cloudera.com/data-engineering/cloud/cli-access/topics/cde-cli.html
 
@@ -17,18 +15,6 @@ The CLI will be needed for CI/CD integration and also access to some of the deep
 ## Structure of this repo
 
 To support this article, we have developed some example applications. The application code sits under `src/main/python` and `src/main/scala` respectively. Code for the airflow example DAG sits under `src/main/airflow`.
-
-<restructure and move>
-
-- `airflow_job.py` - Airflow DAG for schduling the sequence of tasks
-
-Scala Code is available under: `src/main/scala`
-
-This consists of two Scala jobs:
-- `LoadData.scala`
-- `ETLJob.scala`
-<restructure and move>
-
 ### Writing Apps for CDE - Common Concepts
 
 With CDE, the `SparkSession` setting for `executor` and `driver` should be set through CDE options in UI or CLI rather than in the application itself. Including them in the code as well can result in abnormal behaviour.
@@ -58,7 +44,7 @@ spark = SparkSession \
 
 ```
 
-with the CDE CLI this comes as part of the `cde job create` command. 
+With the CDE CLI this comes as part of the `cde job create` command.
 
 ```bash
 
@@ -100,7 +86,7 @@ For deploying the `load_data` script, we can simply define it as a new job in th
 For this particular example, we setup the load_data script used the following settings:
 ![Load Data Settings](images/load_data_config.png)
 
-For the `etl_job` script, I set it up like below 
+For the `etl_job` script, I set it up like below.
 
 ![ETL_job](images/etl_job.png)
 
@@ -164,7 +150,11 @@ cde job create --type --name <your_job_name> --runtime-image-resource-name <runt
 
 For more information including using password protected docker repos see: https://blog.cloudera.com/managing-python-dependencies-for-spark-workloads-in-cloudera-data-engineering/
 
+For small Spark jobs, CDE does support uploading a script directly via the CLI and the system will compile it on the fly. To execute your job in this manner run: 
 
+```bash
+cde spark submit <scala_job>.scala --job-name <your_job_name>
+```
 
 ### Building Jobs for CDE - Scala
 
@@ -190,6 +180,8 @@ addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.9")
 ```
 The build command then becomes `sbt clean assembly`. For more information on using sbt for Spark jobs see:  
 https://mungingdata.com/apache-spark/introduction-to-sbt/ For extra details on the assembly plugin see: https://github.com/sbt/sbt-assembly
+
+
 
 ## Scheduling Jobs
 
